@@ -1881,7 +1881,7 @@ function drawEnS(e){if(e.t==1)return drawEn(e);const[sx,sy,s]=pr(e.x,e.y,0),R=e.
  else if(T==4){k='disc';i=0;w=R*5.4;ly=R*.9}
  else if(T==5){k='bio';i=Math.floor(t*8+e.sd)%6;w=R*3.8}
  else{k='boss';const f=e.hp/e.mhp;i=f>.75?0:f>.5?1:f>.25?2:3;w=R*3.9}
- const r=POS[k][i],x=sx,y=sy-w*r[3]/r[2]*.45-ly+bob,fl=e.x<g.p.x;
+ const r=POS[k][i],x=sx,y=sy-w*r[3]/r[2]*.45-ly+bob;if(e._fl===undefined||Math.abs(e.x-g.p.x)>24)e._fl=e.x<g.p.x;const fl=e._fl;
  spr(AT.img,r,x,y,w,fl);if(e.f>0){ctx.globalCompositeOperation='lighter';spr(AT.img,r,x,y,w,fl,.8);ctx.globalCompositeOperation='source-over'}}
 function drawShip(p,col){
  const[sx,sy,s]=pr(p.x,p.y,0),a=p.face,ca=Math.cos(a),sa=Math.sin(a),H=12*s+Math.sin(g.t*6)*1.5,fl=p.inv>0&&Math.floor(g.t*20)%2,q=(x,y,z)=>[sx+(ca*x-sa*y)*s,sy-H-(z||0)*s+(sa*x+ca*y)*s*K];
@@ -2344,7 +2344,7 @@ function sprList(o,key){o._bl=o._bl||{};if(o._bl[key])return o._bl[key];const L=
   L.sort((p,q)=>p.a-q.a||p.m-q.m);const D=[];for(const v of L)if(!D.length||v.a-D[D.length-1].a>.5)D.push(v);return o._bl[key]=D}
 function sprDraw(o,key,e,x,y,R,fl,bob,hm,tx,ty){
   if(!o.ok)return false;
-  const raw=(Math.atan2(ty,tx)*180/Math.PI+360)%360,L=sprList(o,key);
+  const raw=(Math.atan2(ty*K,tx)*180/Math.PI+360)%360,L=sprList(o,key);
   let sa=e._sd;if(sa===undefined||e._sk!==key){sa=raw;e._sk=key}
   sa=(sa+(((raw-sa+540)%360)-180)*.22+360)%360;e._sd=sa;
   const q=(Math.round(sa/5)*5)%360;let j=-1;for(let k=0;k<L.length;k++)if(L[k].a<=q)j=k;
